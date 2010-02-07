@@ -1,1 +1,3 @@
 These files are *very* random and just me playing around with different code trying to get basic https post/get working. I started working with the bash script and switched to tinkering with ruby.
+
+If you go to the list of pads (the "View all pads" link below the recent pad list on the logged-in homepage), there's a "download all as zip archive" link at the bottom that gives you a zip of all of the files in HTML format). 

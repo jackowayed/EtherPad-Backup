@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
-require 'net/http'
-require 'net/https'
+require 'rubygems'
+require 'mechanize'
 # no idea wtf im doing :)
 
 # Load etherpad credentials from config/credentials.yml
@@ -18,8 +18,18 @@ password  = config['password']
 format    = "txt"
 path      = "https://#{username}.etherpad.com/ep/account/sign-in?cont=https%3a%2f%2f#{username}.etherpad.com%2f"
 
-http = Net::HTTP.new("#{username}.etherpad.com", 443)
-http.use_ssl = true
+agent = WWW::Mechanize.new
+agent.get "http://#{username}.etherpad.com" do |signin_page|
+  home = signin_page.form_with(:id => 'signin-form') do |form|
+    form.email = email
+    form.password = password
+  end.submit
+
+  pad_list = a.click home.links.text(/View all/)
+end
+
+
+http = Net::HTTP.new("#{username}.etherpad.com")
 http.start do |http|
   resp, data = http.get(path, nil)
   cookie = resp.response['set-cookie']
@@ -31,7 +41,7 @@ http.start do |http|
   }
   resp, data = http.post(path, data, headers)
   pad = 3 # just testing
-  getfile = Net::HTTP::Get.new("https://#{username}.etherpad.com/ep/pad/export/#{pad}/latest?format=txt")
+  getfile = Net::HTTP::Get.new("http://#{username}.etherpad.com/ep/pad/export/#{pad}/latest?format=txt")
   asdf = http.request(getfile)
   ans = asdf.body
   puts ans
