@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 require 'net/http'
 require 'net/https'
 # no idea wtf im doing :)
