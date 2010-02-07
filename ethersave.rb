@@ -1,9 +1,19 @@
 require 'net/http'
 require 'net/https'
 # no idea wtf im doing :)
-username  = ""
-email     = ""
-password  = ""
+
+# Load etherpad credentials from config/credentials.yml
+# credentials there and allows developers to gitinore that,
+# so you don't have to worry about accidentally committing
+# your password :)
+# End users should feel free to delete the line that reads
+# the creds and replace `config['email']` with their email, etc
+require 'yaml'
+config = YAML::load File.read('config/credentials.yml')
+username  = config['username']
+email     = config['email']
+password  = config['password']
+
 format    = "txt"
 path      = "https://#{username}.etherpad.com/ep/account/sign-in?cont=https%3a%2f%2f#{username}.etherpad.com%2f"
 
